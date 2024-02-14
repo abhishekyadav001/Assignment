@@ -1,4 +1,3 @@
-import { clearLocalStorage, getLocalStorageItem, setLocalStorageItem } from "../../utils/localStorage";
 import * as types from "./actionTypes";
 
 const initData = {
@@ -6,11 +5,10 @@ const initData = {
   isError: false,
   errorMessage: "",
   signupStatus: false,
-  auth: getLocalStorageItem("accessToken") || "",
-  accessToken: getLocalStorageItem("accessToken") || "",
+  usersData: [],
 };
 
-export const authReducer = (state = initData, { type, payload }) => {
+export const userReducer = (state = initData, { type, payload }) => {
   switch (type) {
     case types.ACCOUNT_LOADING:
       return { ...state, isLoading: true, isError: false, signupStatus: false };
@@ -22,16 +20,8 @@ export const authReducer = (state = initData, { type, payload }) => {
         signupStatus: false,
         errorMessage: payload,
       };
-    case types.LOGIN_SUCCESS:
-      console.log(payload);
-      setLocalStorageItem("accessToken", payload.accessToken);
-      setLocalStorageItem("refreshToken", payload.refreshToken);
-      return { ...state, isLoading: false, accessToken: payload.accessToken };
-    case types.SIGNUP_SUCCESS:
-      return { ...state, isLoading: false, signupStatus: true };
-    case types.ACCOUNT_LOGOUT:
-      clearLocalStorage();
-      return { ...state, isLoading: false, accessToken: "", auth: "" };
+    case types.ACCOUT_DATA_SUCCESS:
+      return { ...state, isLoading: false, usersData: payload };
 
     default:
       return state;
