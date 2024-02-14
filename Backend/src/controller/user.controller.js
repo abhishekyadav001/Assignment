@@ -3,7 +3,7 @@ const userModel = require("../model/users.model");
 
 const getAllUsers = async (req, res) => {
   try {
-    const { data } = await axios.get("https://jsonplaceholder.typicode.com/users");
+    const { data } = await axios.get(process.env.REST_API);
     res.send(data);
   } catch (error) {
     res.status(401).send({ error: error.message, success: false });
