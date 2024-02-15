@@ -4,8 +4,7 @@ import Mainroutes from "./Mainroutes";
 function App() {
   return (
     <div className="App">
-      {/* <Mainroutes /> */}
-      hii
+      <Mainroutes />
     </div>
   );
 }

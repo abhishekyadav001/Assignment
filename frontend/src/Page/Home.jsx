@@ -8,11 +8,11 @@ function Home() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { allUsers } = useSelector((store) => store.auth);
-  
+
   const getData = () => {
     dispatch(getAllUser())
       .then((res) => {
-        console.log(res, "jai");
+        console.log("jai");
         navigate("/allusers");
       })
       .catch((err) => {
@@ -36,7 +36,7 @@ function Home() {
             variant="solid"
             size={"sm"}
             colorScheme="messenger"
-            onClick={getData()}
+            onClick={getData}
           >
             All Users
           </Button>

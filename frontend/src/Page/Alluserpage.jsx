@@ -13,9 +13,9 @@ function Alluserpage() {
           All Users
         </Text>
       </Box>
-      <Grid>
+      <Grid templateColumns="repeat(4, 1fr)" gap={4}>
         {allUsers.map((el, i) => {
-          return <UsersCard key={i} props={el} />;
+          return <UsersCard key={i} data={el} />;
         })}
       </Grid>
     </div>

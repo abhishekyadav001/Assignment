@@ -21,7 +21,7 @@ export const userReducer = (state = initData, { type, payload }) => {
       };
     case types.ACCOUT_DATA_SUCCESS:
       console.log(payload, "j");
-      return { ...state, isLoading: false, allUsers: [...state.allUsers, payload] };
+      return { ...state, isLoading: false, allUsers: payload };
 
     default:
       return state;
