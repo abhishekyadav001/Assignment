@@ -5,7 +5,6 @@ export const getAllUser = () => async (dispatch) => {
   dispatch({ type: types.ACCOUNT_LOADING });
   try {
     const res = await axiosInstance.get("/user/getallusers");
-    console.log(res);
     dispatch({ type: types.ACCOUT_DATA_SUCCESS, payload: res.data });
   } catch (error) {
     dispatch({ type: types.ACCOUNT_ERROR, payload: error.response.data.message });

@@ -1,8 +1,11 @@
 import { Box, Grid, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import UsersCard from "../Components/UsersCard";
+import { useSelector } from "react-redux";
 
 function Alluserpage() {
+  const { allUsers } = useSelector((store) => store.auth);
+
   return (
     <div>
       <Box textAlign={"center"}>
@@ -11,7 +14,9 @@ function Alluserpage() {
         </Text>
       </Box>
       <Grid>
-        <UsersCard />
+        {allUsers.map((el, i) => {
+          return <UsersCard key={i} props={el} />;
+        })}
       </Grid>
     </div>
   );

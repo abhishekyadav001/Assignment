@@ -19,12 +19,12 @@ function UsersCard(props) {
         <CardBody>
           <Stack mt="6" spacing="3">
             <Heading size="md">User Information</Heading>
-            <Text>Name:-{"abhishek"}</Text>
-            <Text>Email:-{"ay@gmail.com"}</Text>
-            <Text>Phone:-{"654965461"}</Text>
-            <Text>Website:-{"www.com"}</Text>
-            <Text>City:-{"Mumbai"}</Text>
-            <Text>Company:-{"TataBirla"}</Text>
+            <Text>Name:-{props.name}</Text>
+            <Text>Email:-{props.email}</Text>
+            <Text>Phone:-{props.phone}</Text>
+            <Text>Website:-{props.website}</Text>
+            <Text>City:-{props.address.city}</Text>
+            <Text>Company:-{props.company.name}</Text>
           </Stack>
         </CardBody>
         <Divider />

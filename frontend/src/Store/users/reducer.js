@@ -4,8 +4,7 @@ const initData = {
   isLoading: false,
   isError: false,
   errorMessage: "",
-  signupStatus: false,
-  usersData: [],
+  allUsers: [],
 };
 
 export const userReducer = (state = initData, { type, payload }) => {
@@ -21,7 +20,8 @@ export const userReducer = (state = initData, { type, payload }) => {
         errorMessage: payload,
       };
     case types.ACCOUT_DATA_SUCCESS:
-      return { ...state, isLoading: false, usersData: payload };
+      console.log(payload, "j");
+      return { ...state, isLoading: false, allUsers: [...state.allUsers, payload] };
 
     default:
       return state;
