@@ -5,6 +5,8 @@ const initData = {
   isError: false,
   errorMessage: "",
   allUsers: [],
+  singleUser: {},
+  isUserExist: false,
 };
 
 export const userReducer = (state = initData, { type, payload }) => {
@@ -16,13 +18,20 @@ export const userReducer = (state = initData, { type, payload }) => {
         ...state,
         isLoading: false,
         isError: true,
-        signupStatus: false,
-        errorMessage: payload,
+        errorMessage: payload.message,
       };
     case types.ACCOUT_DATA_SUCCESS:
-      console.log(payload, "j");
       return { ...state, isLoading: false, allUsers: payload };
-
+    case types.POST_DATA_SUCCESS:
+      return { ...state, isLoading: false, singleUser: payload, isUserExist: payload.userExist };
+    case types.POST_DATA_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        isUserExist: payload.userExist,
+        errorMessage: payload.message,
+      };
     default:
       return state;
   }

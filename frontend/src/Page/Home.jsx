@@ -12,11 +12,10 @@ function Home() {
   const getData = () => {
     dispatch(getAllUser())
       .then((res) => {
-        console.log("jai");
         navigate("/allusers");
       })
       .catch((err) => {
-        console.log(err, "vijay");
+        console.log(err);
       });
   };
   return (
