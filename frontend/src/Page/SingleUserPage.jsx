@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUser } from "../Store/users/action";
 
-function SingleUserPage(props) {
+function SingleUserPage() {
   const dispatch = useDispatch();
   const { allUsers } = useSelector((store) => store.auth);
   const [singleUserinfo, setSingleUserinfo] = useState({});

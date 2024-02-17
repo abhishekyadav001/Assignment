@@ -5,6 +5,7 @@ const initData = {
   isError: false,
   errorMessage: "",
   allUsers: [],
+  allDBusers: [],
   singleUser: {},
   isUserExist: false,
 };
@@ -31,6 +32,12 @@ export const userReducer = (state = initData, { type, payload }) => {
         isError: true,
         isUserExist: payload.userExist,
         errorMessage: payload.message,
+      };
+    case types.DB_USERS_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        allDBusers: payload.usersData,
       };
     default:
       return state;

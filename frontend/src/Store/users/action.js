@@ -11,6 +11,18 @@ export const getAllUser = () => async (dispatch) => {
     return Promise.reject(error.response.data.message);
   }
 };
+
+export const getDBUser = () => async (dispatch) => {
+  dispatch({ type: types.ACCOUNT_LOADING });
+  try {
+    const res = await axiosInstance.get("/user/getDBusers");
+    dispatch({ type: types.DB_USERS_SUCCESS, payload: res.data.usersData });
+  } catch (error) {
+    dispatch({ type: types.DB_USERS_FAIL, payload: error.response.data.message });
+    return Promise.reject(error.response.data.message);
+  }
+};
+
 export const postUser = (userInfo) => async (dispatch) => {
   dispatch({ type: types.ACCOUNT_LOADING });
   try {
