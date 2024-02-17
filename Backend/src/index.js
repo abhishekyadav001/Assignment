@@ -3,12 +3,16 @@ const express = require("express");
 const cors = require("cors");
 const { connection } = require("./config/db");
 const userRoute = require("./route/users.route");
+const postRoute = require("./route/posts.route");
 require("dotenv").config();
+
 const app = express();
 const port = 8080 || process.env.port;
 app.use(express.json());
 app.use(cors({ origin: "*" }));
+
 app.use("/user", userRoute);
+app.use("/post", postRoute);
 app.get("/", (req, res) => {
   res.send("Hello This is Home Page");
 });
