@@ -9,7 +9,7 @@ function Mainroutes(props) {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/allusers" element={<Alluserpage />} />
+      {/* <Route path="/allusers" element={<Alluserpage />} /> */}
       <Route path="/allusers/singleuser" element={<SingleUserPage />} />
       <Route path="/*" element={<Notfoundpage />} />
     </Routes>

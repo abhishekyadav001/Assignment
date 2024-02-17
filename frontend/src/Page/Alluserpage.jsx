@@ -2,10 +2,11 @@ import { Box, Grid, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import UsersCard from "../Components/UsersCard";
 import { useSelector } from "react-redux";
+import { getAllUser } from "../Store/users/action";
 
 function Alluserpage() {
-  const { allUsers } = useSelector((store) => store.auth);
-
+  const { allUsers, allDBusers } = useSelector((store) => store.auth);
+  useEffect(() => {}, [getAllUser, allDBusers]);
   return (
     <div>
       <Box textAlign={"center"}>

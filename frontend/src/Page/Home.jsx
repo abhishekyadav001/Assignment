@@ -3,20 +3,14 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUser } from "../Store/users/action";
 import { useNavigate } from "react-router-dom";
+import Alluserpage from "./Alluserpage";
 
 function Home() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { allUsers } = useSelector((store) => store.auth);
 
   const getData = () => {
-    dispatch(getAllUser())
-      .then((res) => {
-        navigate("/allusers");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    dispatch(getAllUser());
   };
   return (
     <div>
@@ -39,6 +33,9 @@ function Home() {
           >
             All Users
           </Button>
+        </Stack>
+        <Stack>
+          <Alluserpage />
         </Stack>
       </Stack>
     </div>

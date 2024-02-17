@@ -30,7 +30,6 @@ export const userReducer = (state = initData, { type, payload }) => {
         ...state,
         isLoading: false,
         isError: true,
-        isUserExist: payload.userExist,
         errorMessage: payload.message,
       };
     case types.DB_USERS_SUCCESS:
@@ -38,6 +37,14 @@ export const userReducer = (state = initData, { type, payload }) => {
         ...state,
         isLoading: false,
         allDBusers: payload.usersData,
+      };
+    case types.DB_USERS_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        isUserExist: payload.userExist,
+        errorMessage: payload.message,
       };
     default:
       return state;
