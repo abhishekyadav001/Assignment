@@ -4,43 +4,40 @@ const initData = {
   isLoading: false,
   isError: false,
   errorMessage: "",
-  matchedUsers: [],
-  unmatchedUsers: [],
-  singleUser: {},
+  allPosts: [],
+  name: "",
+  company: {},
 };
 
-export const userReducer = (state = initData, { type, payload }) => {
+export const postReducer = (state = initData, { type, payload }) => {
   switch (type) {
-    case types.ACCOUNT_LOADING:
+    case types.POST_LOADING:
       return { ...state, isLoading: true, isError: false, signupStatus: false };
-    case types.ACCOUNT_ERROR:
+    case types.POST_ERROR:
       return {
         ...state,
         isLoading: false,
         isError: true,
         errorMessage: payload,
       };
-    case types.ACCOUT_DATA_SUCCESS:
+    case types.POST_DATA_SUCCESS:
+      console.log(payload.name);
       return {
         ...state,
         isLoading: false,
-        matchedUsers: payload.matchedUsers,
-        unmatchedUsers: payload.unmatchedUsers,
+        allPosts: payload.posts,
+        name: payload.name,
+        company: payload.company,
       };
-    case types.DB_USERS_FAIL:
+    case types.BULK_ADD:
       return {
         ...state,
         isLoading: false,
         isError: true,
         errorMessage: payload,
       };
-    case types.SINGLE_USER_SUCCESS:
-      console.log(payload);
-      return {
-        ...state,
-        isLoading: false,
-        singleUser: payload,
-      };
+    case types.DOWNLOAD_EXCEL:
+      return { ...state };
     default:
       return state;
   }

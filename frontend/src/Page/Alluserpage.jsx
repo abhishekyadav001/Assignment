@@ -1,12 +1,16 @@
 import { Box, Grid, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import UsersCard from "../Components/UsersCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import UnamtachedCard from "../Components/UnamtachedCard";
 import { getAllUser } from "../Store/users/action";
 
 function Alluserpage() {
-  const { allUsers, allDBusers } = useSelector((store) => store.auth);
-  useEffect(() => {}, [getAllUser, allDBusers]);
+  const { matchedUsers, unmatchedUsers } = useSelector((store) => store.auth);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllUser);
+  }, [matchedUsers, unmatchedUsers]);
   return (
     <div>
       <Box textAlign={"center"}>
@@ -15,9 +19,14 @@ function Alluserpage() {
         </Text>
       </Box>
       <Grid templateColumns="repeat(4, 1fr)" gap={4}>
-        {allUsers.map((el, i) => {
-          return <UsersCard key={i} data={el} />;
-        })}
+        {matchedUsers &&
+          matchedUsers.map((el, i) => {
+            return <UsersCard key={i} data={el} />;
+          })}
+        {unmatchedUsers &&
+          unmatchedUsers.map((el, i) => {
+            return <UnamtachedCard key={i} data={el} />;
+          })}
       </Grid>
     </div>
   );

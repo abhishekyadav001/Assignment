@@ -2,16 +2,14 @@ import { Box, Button, Text, ButtonGroup, Stack } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUser } from "../Store/users/action";
-import { useNavigate } from "react-router-dom";
 import Alluserpage from "./Alluserpage";
 
 function Home() {
   const dispatch = useDispatch();
-  const { allUsers } = useSelector((store) => store.auth);
-
   const getData = () => {
     dispatch(getAllUser());
   };
+
   return (
     <div>
       <Stack>

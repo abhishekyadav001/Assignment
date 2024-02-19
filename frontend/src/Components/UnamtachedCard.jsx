@@ -1,3 +1,6 @@
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   ButtonGroup,
@@ -10,14 +13,10 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { addSingleUser } from "../Store/users/action";
-import { useNavigate } from "react-router-dom";
-
-function UsersCard({ data }) {
+import { getAllUser, postUser } from "../Store/users/action";
+function UnamtachedCard({ data }) {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { matchedUsers } = useSelector((store) => store.auth);
   const {
     name,
     email,
@@ -27,13 +26,19 @@ function UsersCard({ data }) {
     id,
   } = data;
 
-  const openHandle = (userId) => {
-    // dispatch(addSingleUser(data));
-    navigate(`/allposts/${userId}`);
+  const addHandle = () => {
+    console.log(data);
+    dispatch(postUser({ data }))
+      .then((res) => {
+        dispatch(getAllUser());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
-    // Fetch users from the specified API when component mounts
+    // Fetching users from the specified API when component mounts
   }, []);
 
   // Check if the user is already in the database
@@ -55,8 +60,8 @@ function UsersCard({ data }) {
         <Divider />
         <CardFooter>
           <ButtonGroup spacing="2">
-            <Button variant="solid" colorScheme="blue" onClick={() => openHandle(id)}>
-              Open
+            <Button variant="solid" colorScheme="blue" onClick={addHandle}>
+              Add
             </Button>
           </ButtonGroup>
         </CardFooter>
@@ -65,4 +70,4 @@ function UsersCard({ data }) {
   );
 }
 
-export default UsersCard;
+export default UnamtachedCard;

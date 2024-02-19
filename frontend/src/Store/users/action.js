@@ -5,29 +5,30 @@ export const getAllUser = () => async (dispatch) => {
   dispatch({ type: types.ACCOUNT_LOADING });
   try {
     const res = await axiosInstance.get("/user/getallusers");
-    dispatch({ type: types.ACCOUT_DATA_SUCCESS, payload: res.data.users });
+    console.log(res);
+    dispatch({ type: types.ACCOUT_DATA_SUCCESS, payload: res.data });
   } catch (error) {
-    dispatch({ type: types.ACCOUNT_ERROR, payload: error.response.data.message });
-    return Promise.reject(error.response.data.message);
+    dispatch({ type: types.ACCOUNT_ERROR, payload: error });
+    throw new Error(error);
   }
 };
 
-export const getDBUser = () => async (dispatch) => {
+export const addSingleUser = (userData) => async (dispatch) => {
   dispatch({ type: types.ACCOUNT_LOADING });
   try {
-    const res = await axiosInstance.get("/user/getDBusers");
-    dispatch({ type: types.DB_USERS_SUCCESS, payload: res.data.usersData });
+    console.log(userData);
+    dispatch({ type: types.SINGLE_USER_SUCCESS, payload: { ...userData } });
   } catch (error) {
-    dispatch({ type: types.DB_USERS_FAIL, payload: error.response.data.message });
-    return Promise.reject(error.response.data.message);
+    dispatch({ type: types.ACCOUNT_ERROR, payload: error });
+    throw new Error(error);
   }
 };
 
-export const postUser = (userInfo) => async (dispatch) => {
+export const postUser = (userData) => async (dispatch) => {
   dispatch({ type: types.ACCOUNT_LOADING });
   try {
-    const res = await axiosInstance.post("/user/postuser", userInfo);
-
+    const res = await axiosInstance.post("/user/postuser", { ...userData });
+    console.log(res);
     dispatch({ type: types.POST_DATA_SUCCESS, payload: res.data });
   } catch (error) {
     dispatch({ type: types.POST_DATA_FAIL, payload: error.response.data });
