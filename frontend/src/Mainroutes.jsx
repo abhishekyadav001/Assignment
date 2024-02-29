@@ -7,7 +7,6 @@ function Mainroutes(props) {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      {/* <Route path="/allusers" element={<Alluserpage />} /> */}
       <Route path="/allposts/:userId" element={<Postpage />} />
       <Route path="/*" element={<Notfoundpage />} />
     </Routes>

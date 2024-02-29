@@ -1,48 +1,104 @@
-import React, { useEffect } from "react";
-import { Button, Container, Flex, Stack, Text } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import { Button, Container, Flex, Stack, Text, useToast } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { BulkAdd, addDBPosts, getPosts } from "../Store/posts/action";
+import { BulkAdd, checkDBposts, downloadInexcel, getPosts } from "../Store/posts/action";
 import PostsCard from "../Components/PostsCard";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { axiosInstance } from "../utils/axiosInstance";
+import fileDownload from "js-file-download";
 
 const Postpage = () => {
-  const isBulkAddVisible = true;
   const { userId } = useParams();
-  const { allPosts } = useSelector((store) => store.post);
+  const navigate = useNavigate();
+  const { allPosts, usersPostexist, successMessage, errorMessage, isLoading } = useSelector((store) => store.post);
   const dispatch = useDispatch();
+  const toast = useToast();
+  const [bulkAdd, setBulkAdd] = useState(usersPostexist);
   const handleBulkAdd = () => {
-    dispatch(BulkAdd(userId));
+    dispatch(BulkAdd(allPosts))
+      .then((res) => {
+        toast({
+          title: successMessage || "all user data successfully fetched",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        toast({
+          title: errorMessage || "Something Internal Error",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      });
   };
 
-  const handleDownloadExcel = () => {
-    // Implement logic to initiate download of Excel file containing user posts
+  // Implemented logic to initiate download of Excel file containing user posts
+  const handleDownloadExcel = async (userId) => {
+    try {
+      const api = process.env.REACT_APP_API;
+      window.location.href = api + `post/${userId}/download-excel/`;
+    } catch (error) {
+      console.error("Error downloading Excel file:", error);
+    }
   };
   useEffect(() => {
-    console.log(userId);
-    dispatch(getPosts(userId));
-    console.log(allPosts);
-  }, []);
+    dispatch(getPosts(userId))
+      .then((res) => {
+        toast({
+          title: successMessage || "all user data successfully fetched",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+      })
+      .catch((err) => {
+        toast({
+          title: errorMessage || "Something Internal Error",
+          status: "fail",
+          duration: 3000,
+          isClosable: true,
+        });
+      });
+    dispatch(checkDBposts(userId))
+      .then((res) => {
+        setBulkAdd(usersPostexist);
+        toast({
+          title: successMessage || "user exist or not checked",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+      })
+      .catch((err) => {
+        toast({
+          title: errorMessage || "Something Internal Error",
+          status: "fail",
+          duration: 3000,
+          isClosable: true,
+        });
+      });
+  }, [dispatch, userId]);
   return (
     <Container maxW="container.lg" mt={13} mb={8}>
       <Flex justifyContent="space-between" alignItems="center" mb={4}>
         <Text fontSize="xl" fontWeight="bold">
           All Users Post
         </Text>
-        {isBulkAddVisible && (
+        {!bulkAdd && (
           <Button colorScheme="blue" onClick={handleBulkAdd}>
             Bulk Add
           </Button>
         )}
-        {!isBulkAddVisible && (
-          <Button colorScheme="blue" onClick={handleDownloadExcel}>
-            Download in Excel
-          </Button>
-        )}
+        {bulkAdd && <Button onClick={() => handleDownloadExcel(userId)}>Download in Excel</Button>}
       </Flex>
       <Stack>
-        {allPosts.map((el, i) => {
-          return <PostsCard key={i} data={el} />;
-        })}
+        {allPosts &&
+          allPosts.map((el, i) => {
+            return <PostsCard key={i} data={el} />;
+          })}
       </Stack>
     </Container>
   );

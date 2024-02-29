@@ -1,4 +1,4 @@
-import { Box, Button, Text, ButtonGroup, Stack } from "@chakra-ui/react";
+import { Box, Button, Text, ButtonGroup, Stack, Toast } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUser } from "../Store/users/action";
@@ -6,8 +6,25 @@ import Alluserpage from "./Alluserpage";
 
 function Home() {
   const dispatch = useDispatch();
+  const { successMessage, errorMessage } = useSelector((store) => store.auth);
   const getData = () => {
-    dispatch(getAllUser());
+    dispatch(getAllUser())
+      .then((res) => {
+        Toast({
+          title: successMessage || "all user data successfully fetched",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+      })
+      .catch((err) => {
+        Toast({
+          title: errorMessage || "Something Internal Error",
+          status: "fail",
+          duration: 3000,
+          isClosable: true,
+        });
+      });
   };
 
   return (

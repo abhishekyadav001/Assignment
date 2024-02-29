@@ -27,7 +27,6 @@ function UnamtachedCard({ data }) {
   } = data;
 
   const addHandle = () => {
-    console.log(data);
     dispatch(postUser({ data }))
       .then((res) => {
         dispatch(getAllUser());

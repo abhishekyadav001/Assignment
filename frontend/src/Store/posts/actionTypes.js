@@ -3,3 +3,4 @@ export const POST_ERROR = "POST_ERROR";
 export const POST_DATA_SUCCESS = "POST_DATA_SUCCESS";
 export const BULK_ADD = "BULK_ADD";
 export const DOWNLOAD_EXCEL = "DOWNLOAD_EXCEL";
+export const CHECK_DB_POSTS = "CHECK_DB_POSTS";

@@ -12,7 +12,6 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addSingleUser } from "../Store/users/action";
 import { useNavigate } from "react-router-dom";
 
 function UsersCard({ data }) {
@@ -31,10 +30,6 @@ function UsersCard({ data }) {
     // dispatch(addSingleUser(data));
     navigate(`/allposts/${userId}`);
   };
-
-  useEffect(() => {
-    // Fetch users from the specified API when component mounts
-  }, []);
 
   // Check if the user is already in the database
 
